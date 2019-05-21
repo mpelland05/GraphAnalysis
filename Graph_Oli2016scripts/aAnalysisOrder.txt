@@ -1,0 +1,22 @@
+0. Transfer_ResFromBasc Or ExtractTseriesFromAtomsS1 and ExtractTseriesFromAtomsS2
+
+1. Use Put2Mat 
+	This script will take files with participants names and will extract the connectivity matrix for a specific condition and group
+	results are saved within a .mat file.
+
+2. Use GetOccNetworkOnly200
+	This script will cut down the matrices to have only the networks(parcellations) of interest. 
+
+3. Use ThreshMinimum
+	This script finds the minimal threshold for each participant. Basically making sure that you know which thresholds you can use.
+
+4. Use script similar to:LaunchAllGraphMeasures_Occ_200
+	This script will get a number of measures from the participants. 
+
+5. Use script similar to LaunchWriteTTest_Occ_Various_11jan2015
+	This script will get you a single t and p-value eah threshold
+
+6. Use script similar to LauchWrite_Main_Effect_Occ_Various_11jan2015
+	This script will get you a single t and p-value for all thresholds combined together
+
+7. Use script similar to MappResults and Mapp_Measure_Values

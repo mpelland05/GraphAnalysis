@@ -1,0 +1,27 @@
+
+mat = Community.rest.CB.mat.thr_50.mat;
+
+for pp = 1:size(mat,2),
+	for nn = 1:size(mat,1),
+		
+		CB(nn,pp) = sum( mat(:,pp) == mat(nn,pp) );
+	end
+end
+
+
+mat = Community.rest.SC.mat.thr_50.mat;
+
+for pp = 1:size(mat,2),
+	for nn = 1:size(mat,1),
+		
+		SC(nn,pp) = sum( mat(:,pp) == mat(nn,pp) );
+	end
+end
+
+dm = mean(CB,2) - mean(SC,2);
+ mste = ((14.*std(CB,1,2) + 17.*std(SC,1,2))./31)/sqrt(31);
+
+mCB = mean(CB,2);
+mSC = mean(SC,2);
+
+tv = dm./mste;
