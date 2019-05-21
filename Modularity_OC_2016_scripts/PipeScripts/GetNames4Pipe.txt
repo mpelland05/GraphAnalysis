@@ -1,0 +1,45 @@
+function [grp, nam]=GetNames4Pipe(gpath,csv_file,csv_var,cont_num),
+%will randomly select a subset of participants, a csv file should be used for 
+%control variables
+%gpath: path to list of directorie
+%csv_file :name of csv file for control variables
+%csv_var  : variable to use as control
+%cont_num :matrix number of rows = num group, and each column reprents how many participants of each type for each control variable should be selected.
+
+%%%%%%%%%
+% Pierre's way of getting rid of folders or files
+%%%%%%%%%
+dir_files = dir(gpath);
+mask_dir = [dir_files.isdir];
+list_all = {dir_files.name};
+mask_dot = ismember(list_all,{'.','..'});
+dir_files = dir_files(~mask_dot);
+mask_dir = mask_dir(~mask_dot);
+list_all = list_all(~mask_dot);
+list_files = list_all(~mask_dir);
+list_dir = list_all(mask_dir);
+
+%%%%%%
+% CSV with cont variable
+%%%%%
+contval = zeros(1,length(list_dir));
+
+[tab,lab_x,lab_y] = niak_read_csv(csv_file);
+csv_col = find(~cellfun('isempty',strfind(lab_y,csv_var)));
+
+for pp = 1:length(list_dir), 	
+    tloc = find(~cellfun('isempty',strfind(lab_x,list_dir(pp) )));
+    contval(pp) = tab(tloc,csv_col);
+end
+
+%part name as a function of 
+nam_v1 = list_dir(find(contval == 1));
+nam_v2 = list_dir(find(contval == 2));
+
+permv1 = randperm(length(nam_v1));
+permv2 = randperm(length(nam_v2));
+
+nam = [nam_v1(permv1(1:cont_num(1,1))) nam_v2(permv2(1:cont_num(1,2))) nam_v1(permv1(cont_num(1,1)+1:cont_num(1,1)+cont_num(2,1))) nam_v2(permv2(cont_num(1,2)+1:cont_num(1,2)+cont_num(2,2)))];
+grp = [ones(1,cont_num(1,1)+cont_num(1,2))  (ones(1,cont_num(2,1)+cont_num(2,2)).*2)];
+
+end
