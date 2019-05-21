@@ -1,0 +1,64 @@
+%%files_in.mask = '/home/mpelland/database/blindModularity/mask/Occipital/CBLBSC_TaskRest_Scale6_Occ.nii';    %Use 15, 10 or 7 networks for the mask if using the
+%%                                                                                 %original parcellation based on CB, LB, SC, rest and task. 
+%%files_in.path='/home/mpelland/database/blindtvr/fmri/basc_01/stability_ind';
+%%files_in.pType = 'consensus';
+%%files_in.filter = {'task','LBxxx'};
+%%files_in.groups = {'CBxxx','SCxxx'};
+%%files_in.contrast = {[1 2]};
+%%files_in.scales = 100;
+
+
+
+
+
+%files_in
+%   .mask  mask in which the analysis will be carried 0 for not carried and
+%           1s for carried.
+%
+%   .path       folder which contains the partion. 
+%   .pType      type of partition to use, options are: adjusted, consensus,
+%               core, theshold
+%   .filter     cell arrays of strins containing things to be removed ex: Task
+%   .groups     cell array of strings specifying the group ex: CBxxx
+%   .contrast   cell array of matrices specifying groups to be contrasted.
+%               Self contrast is done automatically.
+%   .scales      matrix containing the scale(s) at which the analysis must be
+%               carried
+%
+%files_out  Path of folder in which the results will be saved.
+
+
+
+%%%test
+fs = filesep;
+
+     files_in.path = 'F:\Modularity';
+     files_in.scales = 100;
+     files_in.pType = 'consensus';
+     files_in.filter = {'zzz'};
+     files_in.groups = {'Graph', 'Mask', 'Scr', 'Tem'};
+     files_in.mask = 'F:\Modularity\Masks\Occipital\CBLBSC_TaskRest_Scale6_Occ.nii';
+
+tdir = dir(files_in.path);
+tnam = find(vertcat(tdir.isdir));
+
+for tt = tnam(3:length(tnam))',
+    tpnames{tt-2} = tdir(tt).name;
+end
+
+ReMat = zeros(length(tpnames),length(files_in.filter));
+
+for ff = 1:length(files_in.filter),
+    ReMat(:,ff) = not(cellfun('isempty',strfind(tpnames,files_in.filter{ff})));
+end
+
+pnames = tpnames(find(sum(ReMat,2)==0));
+
+
+
+GroupMat = zeros(1,length(pnames));
+for gg = 1:length(files_in.groups),
+    GroupMat(not(cellfun('isempty',strfind(pnames,files_in.groups{gg})))) = gg;
+end
+
+files_in.mask = 'F:\Modularity\Masks\Occipital\CBLBSC_TaskRest_Scale6_Occ.nii';

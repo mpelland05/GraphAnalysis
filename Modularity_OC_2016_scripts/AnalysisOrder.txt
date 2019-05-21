@@ -1,0 +1,50 @@
+1) Testing differences between groups
+
+	1.1) use  LaunchCompareTopographies_old
+		 or 
+		LaunchCompareTopographies to get the overlap values at each voxels.
+
+		 Compares for each voxel/atom how much the map linked to this parcel ressembles the map of other participants. 
+	
+	 	  Note: the first version of the script used the whole partitions to compare groups. However, some partitions at low levels
+			span more than just the occipital lobe which led to problems when investigating differences only at the the level of
+			this lobe (for exemple, looking only at the Occ. Lobe, 2 participants might have really similar networks. However, in one 
+			participant, this network would span all of the frontal lobe too, leading to low score of similarity between them).
+			Thus, the second version of the script avoids this issue by masking analysis with the mask of voxel of interest. 
+			
+			Moreover, if data comes from graph theory results, used LaunchMappPartitions to obtain the data for this step.
+
+
+	1.2.1) use AverageDiCe/AverageDiCeWithinParticipants(in the newest version, if the latter cannot be found, its okay, they are the same, but with
+		 different names) to get the average score for each participants
+		
+		Basically gives you the average intra vs inter group similarity. 
+		Thus, instead of having a nVoxels x N x N matrix (where each participant is compared to each other participant), there will be
+		a nVoxels x N (Where you get a single score per participant showing how he compare on average with the others). This is done
+		both at the intra group level and the inter group level.
+
+	1.2.2 use AverageDiCe AccrossScales
+
+	1.3) Use CompareDiCe/CompareDiCePaired
+		The paired version should be used on dependent data (repeated measures). 
+		 
+
+	1.4)Use mapP/Qvalues to obtain a map of the results
+		
+
+
+
+
+2) Visualizing differences between consensus maps for each group
+
+	2.1) Use InStab2GroupStab
+		This will take individual stability maps from a single group and compute its group stability map.
+		
+		Note: This uses a personally modified script from what Pierre uses, niak_brick_stability_group_maxime.
+
+	2.2) Use a script to launch the mapping
+		Note: no particular script was written for this, so take this: 'LaunchMapping_Rest_onlyCBSCMixed' as a example on how to write
+		the script. 
+
+3) Visualize differences in grouping
+     Check out script, and take MakeAverageMaps. 

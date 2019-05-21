@@ -1,0 +1,15 @@
+aa = linspace(.36,.9129,380);
+bb = repmat(aa',1,14);
+
+g1 = randn(1,14); g1 = repmat(g1,760,1); g1([1:2:760],:) = g1([1:2:760],:).*10; g1([2:2:760],:) = g1([2:2:760],:)+bb; g1 = g1+1;
+g3 = randn(1,14); g3 = repmat(g3,760,1); g3([1:2:760],:) = g3([1:2:760],:).*10; g3 = g3+1;
+
+
+g2 = randn(1,17); g2 = repmat(g2,760,1); g2([1:2:760],:) = g2([1:2:760],:).*10; g2 = g2+1;
+g4 = randn(1,17); g4 = repmat(g4,760,1); g4([1:2:760],:) = g4([1:2:760],:).*10; g4 = g4+1;
+
+
+Avg.sci100_scf100.Self_CBxxx = g1;
+Avg.sci100_scf100.Self_SCxxx = g2;
+Avg.sci100_scf100.CBxxx_vs_SCxxx = g3;
+Avg.sci100_scf100.SCxxx_vs_CBxxx = g4;
